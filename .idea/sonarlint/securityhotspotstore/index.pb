@@ -27,8 +27,6 @@ r
 Bsrc/main/java/org/ommp/ommpspring/repositories/SiteRepository.java,3\a\3a9ba45123abe8bec1dea8bcfbdb5c10127fe4b4
 v
 Fsrc/main/java/org/ommp/ommpspring/repositories/DocumentRepository.java,3\0\3083736d35925acd3efd8c2b458ca9a8708c911f
-l
-<src/main/java/org/ommp/ommpspring/IService/IServiceUser.java,2\f\2f6b09edccbbaa54e300424aae8f93d0e8e347e4
 k
 ;src/main/java/org/ommp/ommpspring/services/UserService.java,1\0\104f0d976d5db1698a5a9da25fcca5d72b7d57e1
 l
@@ -37,10 +35,6 @@ q
 Asrc/main/java/org/ommp/ommpspring/IService/IUserAdminService.java,3\e\3ea0afdc0fa3d8250d14bf8c0518792ed5b98c65
 p
 @src/main/java/org/ommp/ommpspring/services/UserAdminService.java,9\7\97b92c5e1f39828897254acd42c0d29c1878adac
-p
-@src/main/java/org/ommp/ommpspring/IService/IUserPortSerivce.java,d\f\dffbec4ebbe432174b04975c394434df928177fe
-d
-4src/main/java/org/ommp/ommpspring/services/adad.java,8\a\8ab64a4a390a9166752fc61a0528d57cf4825a6f
 o
 ?src/main/java/org/ommp/ommpspring/services/UserPortService.java,6\e\6ece9aebda980ea5bc2df4aea2d3b7d0be4d1851
 p
@@ -69,3 +63,13 @@ u
 Esrc/main/java/org/ommp/ommpspring/controllers/DocumentController.java,0\5\0579e861f60a20abb7c854b50a14699e5a73a12c
 q
 Asrc/main/java/org/ommp/ommpspring/controllers/SiteController.java,0\b\0b3011801b67195fc7012f7b85c1a6ba7fea8dfc
+Y
+)src/main/resources/application.properties,0\6\06f65155ec73600b9fc5c4dc2883d4bb84d8e284
+l
+<src/main/java/org/ommp/ommpspring/OmmpSpringApplication.java,f\9\f9f13dcc9cd66514808c8bccbd15020b07b13d49
+q
+Asrc/test/java/org/ommp/ommpspring/OmmpSpringApplicationTests.java,1\8\1888f655abc9bae004d9e5ca11ff18998e0bd617
+>
+ommpSpring.iml,1\2\126ac103a574abbd65459e66365185c453923710
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d

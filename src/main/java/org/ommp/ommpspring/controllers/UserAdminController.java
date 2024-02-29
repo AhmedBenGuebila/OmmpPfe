@@ -3,14 +3,15 @@ package org.ommp.ommpspring.controllers;
 import org.ommp.ommpspring.IService.IUserAdminService;
 import org.ommp.ommpspring.entities.UserAdmin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RequestMapping("/api/user-admins")
 public class UserAdminController {
 
@@ -25,33 +26,27 @@ public class UserAdminController {
 
     @PutMapping("/{userAdminId}")
     public ResponseEntity<UserAdmin> updateUserAdmin(@PathVariable Long userAdminId, @RequestBody UserAdmin userAdmin) {
-        try {
+        Optional<UserAdmin> existingUserAdminOptional = userAdminService.getUserAdminById(userAdminId);
+        if (existingUserAdminOptional.isPresent()) {
             userAdmin.setIdUser(userAdminId);
             UserAdmin updatedUserAdmin = userAdminService.updateUserAdmin(userAdmin);
             return new ResponseEntity<>(updatedUserAdmin, HttpStatus.OK);
-        } catch (ChangeSetPersister.NotFoundException e) {
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @DeleteMapping("/{userAdminId}")
     public ResponseEntity<Void> deleteUserAdmin(@PathVariable Long userAdminId) {
-        try {
-            userAdminService.deleteUserAdmin(userAdminId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (ChangeSetPersister.NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        userAdminService.deleteUserAdmin(userAdminId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{userAdminId}")
     public ResponseEntity<UserAdmin> getUserAdminById(@PathVariable Long userAdminId) {
-        try {
-            UserAdmin userAdmin = userAdminService.getUserAdminById(userAdminId);
-            return new ResponseEntity<>(userAdmin, HttpStatus.OK);
-        } catch (ChangeSetPersister.NotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        Optional<UserAdmin> userAdminOptional = userAdminService.getUserAdminById(userAdminId);
+        return userAdminOptional.map(userAdmin -> new ResponseEntity<>(userAdmin, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @GetMapping

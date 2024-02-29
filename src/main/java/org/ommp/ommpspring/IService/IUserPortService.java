@@ -5,6 +5,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface IUserPortService {
@@ -14,7 +15,7 @@ public interface IUserPortService {
 
     void deleteUserPort(Long userPortId) throws ChangeSetPersister.NotFoundException;
 
-    UserPort getUserPortById(Long userPortId) throws ChangeSetPersister.NotFoundException;
+    Optional<UserPort> getUserPortById(Long userPortId) throws ChangeSetPersister.NotFoundException;
 
     List<UserPort> getAllUserPorts();
 }

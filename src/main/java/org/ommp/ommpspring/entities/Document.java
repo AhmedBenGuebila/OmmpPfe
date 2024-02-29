@@ -1,5 +1,6 @@
 package org.ommp.ommpspring.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -23,6 +24,7 @@ public class Document {
     private LocalDate dateCreation;
     @DateTimeFormat
     private LocalDate dateMiseAJour;
+    private  String url;
 
 
     @Enumerated(EnumType.STRING)
@@ -40,7 +42,15 @@ public class Document {
         procedure, precess ,instruction ,PQ , MQ , TB
     }
 
+    public void addUser(User user) {
+        this.users.add(user);
+        user.getDocuments().add(this);
+    }
 
+    public void removeUser(User user) {
+        this.users.remove(user);
+        user.getDocuments().remove(this);
+    }
 
     @ManyToMany(mappedBy = "documents")
     private Set<User> users;

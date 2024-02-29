@@ -3,14 +3,6 @@ package org.ommp.ommpspring.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Set;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import javax.validation.constraints.Email;
 @Entity
 @Getter
 @Setter
@@ -26,14 +18,24 @@ public class UserPort extends User{
         }
 
         public enum UserPortType {
-            CHEF_REGION_MARITIME,
+
+            DIRECTEUR_DE_PORT,
             COORDINATEUR_QUALITE,
-            CHEF_DIVISION_SECURITE_MARITIME,
-            CHEF_SERVICE_SECURITE_MARITIME,
-            CHEF_QUARTIER,
-            CHARGE_BUREAU_FLOTTE,
-            CHARGE_BUREAU_GENS_DE_MER,
-            CHEF_QUARTIER_MARITIME
+            CHEF_DIVISION_EXPLOITATEUR,
+            CHEF_SERVICE_EXPLOITATEUR,
+            CHEF_DIVISION_CAPITAINERIE,
+            CHEF_SERVICE_ARMEMENT,
+            CHEF_SERVICE_SURETE_SECURITE,
+            CHEF_DIVISION_TECHNIQUE,
+            CHEF_SERVICE_MAINTENANCE,
+            CHEF_DIVISION_ADMINISTRATIF_FINANCIER,
+            CHEF_SERVICE_ADMINISTRATIF,
+            CHEF_SECTION_ACHAT,
+            CHEF_SERVICE_FINANCIER,
+            CHEF_SECTION_COMPTABILITE,
+            CHEF_DIVISION_GARRE_MARITIME,
+            CHEF_SERVICE_GARRE_MARITIME
+
         }
 
         @Enumerated(EnumType.STRING)

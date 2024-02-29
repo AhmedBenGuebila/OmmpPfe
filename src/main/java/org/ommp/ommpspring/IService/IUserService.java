@@ -5,17 +5,20 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
 public interface IUserService {
     User saveUser(User user);
 
-    User updateUser(User user) throws ChangeSetPersister.NotFoundException;
+    User updateUser(User user) ;
 
-    void deleteUser(Long userId) throws ChangeSetPersister.NotFoundException;
+    void deleteUser(Long userId);
 
-    User getUserById(Long userId) throws ChangeSetPersister.NotFoundException;
+    Optional<User> getUserById(Long userId) ;
 
     List<User> getAllUsers();
+
+
 }

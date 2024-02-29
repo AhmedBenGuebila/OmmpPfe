@@ -4,15 +4,16 @@ import org.ommp.ommpspring.entities.UserAdmin;
 import org.springframework.data.crossstore.ChangeSetPersister;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUserAdminService {
     UserAdmin saveUserAdmin(UserAdmin userAdmin);
 
-    UserAdmin updateUserAdmin(UserAdmin userAdmin) throws ChangeSetPersister.NotFoundException;
+    UserAdmin updateUserAdmin(UserAdmin userAdmin) ;
 
-    void deleteUserAdmin(Long userAdminId) throws ChangeSetPersister.NotFoundException;
+    void deleteUserAdmin(Long userAdminId) ;
 
-    UserAdmin getUserAdminById(Long userAdminId) throws ChangeSetPersister.NotFoundException;
+    Optional<UserAdmin> getUserAdminById(Long userAdminId) ;
 
     List<UserAdmin> getAllUserAdmins();
 }

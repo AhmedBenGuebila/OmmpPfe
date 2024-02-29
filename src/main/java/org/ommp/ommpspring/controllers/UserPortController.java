@@ -9,8 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RequestMapping("/api/user-ports")
 public class UserPortController {
 
@@ -47,7 +49,8 @@ public class UserPortController {
     @GetMapping("/{userPortId}")
     public ResponseEntity<UserPort> getUserPortById(@PathVariable Long userPortId) {
         try {
-            UserPort userPort = userPortService.getUserPortById(userPortId);
+            Optional<UserPort> userPortOptional = userPortService.getUserPortById(userPortId);
+            UserPort userPort =userPortOptional.get();
             return new ResponseEntity<>(userPort, HttpStatus.OK);
         } catch (ChangeSetPersister.NotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

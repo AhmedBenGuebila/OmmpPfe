@@ -22,35 +22,15 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User updateUser(User user) throws ChangeSetPersister.NotFoundException {
-        if (userRepository.existsById(user.getIdUser())) {
-            return userRepository.save(user);
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-    }
+    public User updateUser(User user)  { return userRepository.save(user);}
 
     @Override
-    public void deleteUser(Long userId) throws ChangeSetPersister.NotFoundException {
-        if (userRepository.existsById(userId)) {
-            userRepository.deleteById(userId);
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-    }
+    public void deleteUser(Long userId){userRepository.deleteById(userId);}
+    @Override
+    public Optional<User> getUserById(Long userId) {return userRepository.findById(userId);}
 
     @Override
-    public User getUserById(Long userId) throws ChangeSetPersister.NotFoundException {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            return userOptional.get();
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-    }
+    public List<User> getAllUsers() {return userRepository.findAll();}
 
-    @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
+
 }

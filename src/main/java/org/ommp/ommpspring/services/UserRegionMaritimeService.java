@@ -1,7 +1,9 @@
 package org.ommp.ommpspring.services;
 
 import org.ommp.ommpspring.IService.IUserRegionMaritimeService;
+import org.ommp.ommpspring.entities.Site;
 import org.ommp.ommpspring.entities.UserRegionMaritime;
+import org.ommp.ommpspring.repositories.SiteRepository;
 import org.ommp.ommpspring.repositories.UserRegionMaritimeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -15,42 +17,43 @@ public class UserRegionMaritimeService implements IUserRegionMaritimeService {
 
     @Autowired
     private UserRegionMaritimeRepository userRegionMaritimeRepository;
+    @Autowired
+    private SiteRepository siteRepository;
+    @Override
+    public UserRegionMaritime saveUserRegionMaritime(UserRegionMaritime userRegionMaritime) {return userRegionMaritimeRepository.save(userRegionMaritime);}
 
     @Override
-    public UserRegionMaritime saveUserRegionMaritime(UserRegionMaritime userRegionMaritime) {
-        return userRegionMaritimeRepository.save(userRegionMaritime);
-    }
+    public UserRegionMaritime updateUserRegionMaritime(UserRegionMaritime userRegionMaritime) {return  userRegionMaritimeRepository.save(userRegionMaritime);}
 
     @Override
-    public UserRegionMaritime updateUserRegionMaritime(UserRegionMaritime userRegionMaritime) throws ChangeSetPersister.NotFoundException {
-        if (userRegionMaritimeRepository.existsById(userRegionMaritime.getIdUser())) {
-            return userRegionMaritimeRepository.save(userRegionMaritime);
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-    }
+    public void deleteUserRegionMaritime(Long userRegionMaritimeId){userRegionMaritimeRepository.deleteById(userRegionMaritimeId);}
 
     @Override
-    public void deleteUserRegionMaritime(Long userRegionMaritimeId) throws ChangeSetPersister.NotFoundException {
-        if (userRegionMaritimeRepository.existsById(userRegionMaritimeId)) {
-            userRegionMaritimeRepository.deleteById(userRegionMaritimeId);
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-    }
+    public Optional<UserRegionMaritime> getUserRegionMaritimeById(Long userRegionMaritimeId) {return userRegionMaritimeRepository.findById(userRegionMaritimeId);}
 
     @Override
-    public UserRegionMaritime getUserRegionMaritimeById(Long userRegionMaritimeId) throws ChangeSetPersister.NotFoundException {
-        Optional<UserRegionMaritime> userRegionMaritimeOptional = userRegionMaritimeRepository.findById(userRegionMaritimeId);
+    public List<UserRegionMaritime> getAllUserRegionMaritimes() { return userRegionMaritimeRepository.findAll();}
+
+    public void createSiteAndAssignToUserRegionMaritime(String nom, String libelleFR, Long userId) {
+        Optional<UserRegionMaritime> userRegionMaritimeOptional = userRegionMaritimeRepository.findById(userId);
+
         if (userRegionMaritimeOptional.isPresent()) {
-            return userRegionMaritimeOptional.get();
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-    }
+            UserRegionMaritime userRegionMaritime = userRegionMaritimeOptional.get();
 
-    @Override
-    public List<UserRegionMaritime> getAllUserRegionMaritimes() {
-        return userRegionMaritimeRepository.findAll();
+            if (userRegionMaritime.getUserRegionMaritimeType() == UserRegionMaritime.UserRegionMaritimeType.CHEF_SOUS_QUARTIER_MARITIME ||
+                    userRegionMaritime.getUserRegionMaritimeType() == UserRegionMaritime.UserRegionMaritimeType.CHEF_QUARTIER_MARITIME) {
+
+                Site site = new Site();
+                site.setNom(nom);
+                site.setLibelleFR(libelleFR);
+                site.setUserRegionMaritime(userRegionMaritime);
+
+                siteRepository.save(site);
+            } else {
+                throw new RuntimeException("L'utilisateur n'est pas autorisé à affecter un site.");
+            }
+        } else {
+            throw new RuntimeException("L'utilisateur de la région maritime n'existe pas avec l'ID spécifié.");
+        }
     }
 }

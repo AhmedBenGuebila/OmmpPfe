@@ -1,5 +1,6 @@
 package org.ommp.ommpspring.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,5 +20,6 @@ public class Site {
 
     @ManyToOne
     @JoinColumn(name = "idUser")
+    @JsonIgnore
     private UserRegionMaritime userRegionMaritime;
 }

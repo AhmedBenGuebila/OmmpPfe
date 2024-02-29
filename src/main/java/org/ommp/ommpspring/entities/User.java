@@ -1,5 +1,6 @@
 package org.ommp.ommpspring.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,9 +8,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import javax.validation.constraints.Email;
 @Entity
 @Getter
@@ -18,7 +16,7 @@ import javax.validation.constraints.Email;
 @Builder
 @Table
 @NoArgsConstructor
-public class User implements Serializable, UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;
@@ -37,47 +35,15 @@ public class User implements Serializable, UserDetails {
     }
 
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
 
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "user_document",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "document_id")
     )
+
     private Set<Document> documents;
 }

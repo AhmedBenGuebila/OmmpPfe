@@ -17,40 +17,17 @@ public class UserAdminService implements IUserAdminService {
     private UserAdminRepository userAdminRepository;
 
     @Override
-    public UserAdmin saveUserAdmin(UserAdmin userAdmin) {
-        return userAdminRepository.save(userAdmin);
-    }
+    public UserAdmin saveUserAdmin(UserAdmin userAdmin) {return userAdminRepository.save(userAdmin);}
 
     @Override
-    public UserAdmin updateUserAdmin(UserAdmin userAdmin) throws ChangeSetPersister.NotFoundException {
-        if (userAdminRepository.existsById(userAdmin.getIdUser())) {
-            return userAdminRepository.save(userAdmin);
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-    }
+    public UserAdmin updateUserAdmin(UserAdmin userAdmin) {return userAdminRepository.save(userAdmin);}
 
     @Override
-    public void deleteUserAdmin(Long userAdminId) throws ChangeSetPersister.NotFoundException {
-        if (userAdminRepository.existsById(userAdminId)) {
-            userAdminRepository.deleteById(userAdminId);
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-    }
+    public void deleteUserAdmin(Long userAdminId){userAdminRepository.deleteById(userAdminId);}
 
     @Override
-    public UserAdmin getUserAdminById(Long userAdminId) throws ChangeSetPersister.NotFoundException {
-        Optional<UserAdmin> userAdminOptional = userAdminRepository.findById(userAdminId);
-        if (userAdminOptional.isPresent()) {
-            return userAdminOptional.get();
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-    }
+    public Optional<UserAdmin> getUserAdminById(Long userAdminId){ return userAdminRepository.findById(userAdminId);}
 
     @Override
-    public List<UserAdmin> getAllUserAdmins() {
-        return userAdminRepository.findAll();
-    }
+    public List<UserAdmin> getAllUserAdmins() {return userAdminRepository.findAll();}
 }

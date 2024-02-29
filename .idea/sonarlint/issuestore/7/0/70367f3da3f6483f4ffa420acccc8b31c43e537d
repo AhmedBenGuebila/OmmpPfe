@@ -1,17 +1,4 @@
 
 D
-java:S1948<"'Make "sites" transient or serializable.(ô¾¦8Œ´²õÙ1
-]	java:S1075"AConstructor has 9 parameters, which is greater than 7 authorized.(¯ùÄñ8ÀëÏòÙ1
-S
-java:S1128"1Remove this unused import 'java.io.Serializable'.(èãîÂÿÿÿÿÿ8’´²õÙ1
-S
-java:S1128"1Remove this unused import 'java.util.Collection'.(¹ÉĞšùÿÿÿÿ8”´²õÙ1
-l
-java:S1128
-"ORemove this unused import 'org.springframework.security.core.GrantedAuthority'.(½Á±ÿ8•´²õÙ1
-
-java:S1128"_Remove this unused import 'org.springframework.security.core.authority.SimpleGrantedAuthority'.(– ‹Ìûÿÿÿÿ8—´²õÙ1
-s
-java:S1128"VRemove this unused import 'org.springframework.security.core.userdetails.UserDetails'.(ÊÁ¥8™´²õÙ1
-a
-java:S1128"?Remove this unused import 'javax.validation.constraints.Email'.(¸àô¹üÿÿÿÿ8›´²õÙ1
+java:S19486"'Make "sites" transient or serializable.(ô¾¦8ÅñÙ™Ú1
+]	java:S107/"AConstructor has 9 parameters, which is greater than 7 authorized.(¯ùÄñ8ÆñÙ™Ú1

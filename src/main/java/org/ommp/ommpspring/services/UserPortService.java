@@ -22,31 +22,14 @@ public class UserPortService implements IUserPortService {
     }
 
     @Override
-    public UserPort updateUserPort(UserPort userPort) throws ChangeSetPersister.NotFoundException {
-        if (userPortRepository.existsById(userPort.getIdUser())) {
-            return userPortRepository.save(userPort);
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-    }
+    public UserPort updateUserPort(UserPort userPort) { return userPortRepository.save(userPort);}
 
     @Override
-    public void deleteUserPort(Long userPortId) throws ChangeSetPersister.NotFoundException {
-        if (userPortRepository.existsById(userPortId)) {
-            userPortRepository.deleteById(userPortId);
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
-    }
+    public void deleteUserPort(Long userPortId) {userPortRepository.deleteById(userPortId);}
 
     @Override
-    public UserPort getUserPortById(Long userPortId) throws ChangeSetPersister.NotFoundException {
-        Optional<UserPort> userPortOptional = userPortRepository.findById(userPortId);
-        if (userPortOptional.isPresent()) {
-            return userPortOptional.get();
-        } else {
-            throw new ChangeSetPersister.NotFoundException();
-        }
+    public Optional<UserPort> getUserPortById(Long userPortId) {
+        return userPortRepository.findById(userPortId);
     }
 
     @Override
