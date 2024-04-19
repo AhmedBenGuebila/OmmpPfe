@@ -20,8 +20,8 @@ public class UserAdmin extends User{
     @Enumerated(EnumType.STRING)
     private UserAdmin.userAdminType userAdminType;
 
-    public UserAdmin(Long idUser, String nom, String prenom, int cin, String email, Long numTel, String password, UserPort.Port port, UserPort.UserPortType userPortType) {
-        super(idUser, nom, prenom, cin, email, numTel, password);
+    public UserAdmin(Long idUser, String nom, String prenom, Long matricule, String email, Long numTel, String password, UserAdmin.userAdminType userAdminType,UserType userType) {
+        super(idUser, nom, prenom, matricule, email, numTel, password,userType);
         this.userAdminType = userAdminType;
     }
 

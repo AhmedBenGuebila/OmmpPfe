@@ -21,4 +21,5 @@ public interface IUserService {
     List<User> getAllUsers();
 
 
+    Optional<User> getUserByEmail(String email);
 }

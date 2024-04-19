@@ -39,11 +39,27 @@ public class SignupController {
         return generateResponse(isPortUserCreated, "Port User");
     }
 
+    @PostMapping("/SIEGE")
+    public ResponseEntity<String> signUpSiegeUser(@RequestBody SignupRequest signupRequest) {
+        boolean isSiegeUserCreated = authService.createUser(signupRequest);
+        return generateResponse(isSiegeUserCreated, "Siege User");
+    }
+
     @PostMapping("/REGION_MARITIME")
     public ResponseEntity<String> signUpRegionMaritimeUser(@RequestBody SignupRequest signupRequest) {
         boolean isRegionMaritimeUserCreated = authService.createUser(signupRequest);
         return generateResponse(isRegionMaritimeUserCreated, "Region Maritime User");
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable long id, @RequestBody SignupRequest signupRequest) {
+        boolean isUserUpdated = authService.updateUser(signupRequest, id);
+        if (isUserUpdated) {
+            return ResponseEntity.status(HttpStatus.OK).body("{}");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User with ID " + id + " not found");
+        }
+    }
+
     private ResponseEntity<String> generateResponse(boolean isUserCreated, String userType) {
         if (isUserCreated) {
             return ResponseEntity.status(HttpStatus.CREATED).body(userType + " created successfully");

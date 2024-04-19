@@ -44,8 +44,8 @@ public class UserPort extends User{
         @Enumerated(EnumType.STRING)
         private UserPortType userPortType;
 
-        public UserPort(Long idUser, String nom, String prenom, int cin, String email, Long numTel, String password, Port port, UserPortType userPortType) {
-            super(idUser, nom, prenom, cin, email, numTel, password);
+        public UserPort(Long idUser, String nom, String prenom, Long matricule, String email, Long numTel, String password, Port port, UserPortType userPortType,UserType userType) {
+            super(idUser, nom, prenom, matricule, email, numTel, password,userType);
             this.port = port;
             this.userPortType = userPortType;
         }

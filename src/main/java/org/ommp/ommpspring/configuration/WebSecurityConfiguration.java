@@ -3,6 +3,7 @@ package org.ommp.ommpspring.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,7 +21,7 @@ public class WebSecurityConfiguration {
     private final JwtRequestFilter jwtRequestFilter;
 
     @Autowired
-    public WebSecurityConfiguration(JwtRequestFilter jwtRequestFilter) {
+    public WebSecurityConfiguration(@Lazy JwtRequestFilter jwtRequestFilter) {
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
@@ -29,9 +30,9 @@ public class WebSecurityConfiguration {
         httpSecurity.csrf().disable()
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/signup/ADMIN", "/signup/REGION_MARITIME", "/signup/user", "/signup/PORT", "/login")
+                                .requestMatchers("/signup/**", "/login","/api/**")
                                 .permitAll()
-                                .requestMatchers("/api/**").authenticated()
+                                .requestMatchers("/test").authenticated()
                 )
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.ommp.ommpspring.IService.IUserService;
 import org.ommp.ommpspring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +26,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
 
-    public JwtRequestFilter(UserService userService, JwtUtil jwtUtil) {
+    public JwtRequestFilter(@Lazy UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
     }

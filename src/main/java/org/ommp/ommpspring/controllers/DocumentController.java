@@ -96,7 +96,7 @@ public class DocumentController {
 
 
 
-    @GetMapping("/{userId}/documents")
+    @GetMapping("/documentsByUser/{userId}")
     public ResponseEntity<Set<Document>> getDocumentsByUserId(@PathVariable Long userId) {
         try {
             Set<Document> documents = documentService.getDocumentsByUserId(userId);

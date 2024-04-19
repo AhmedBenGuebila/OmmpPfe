@@ -37,8 +37,8 @@ public class UserRegionMaritime extends User{
     @Enumerated(EnumType.STRING)
     private UserRegionMaritimeType userRegionMaritimeType;
 
-    public UserRegionMaritime(Long idUser, String nom, String prenom, int cin, String email, Long numTel, String password, Region region, UserRegionMaritimeType userRegionMaritimeType) {
-        super(idUser, nom, prenom, cin, email, numTel, password);
+    public UserRegionMaritime(Long idUser, String nom, String prenom, Long matricule, String email, Long numTel, String password, Region region, UserRegionMaritimeType userRegionMaritimeType,UserType userType) {
+        super(idUser, nom, prenom, matricule, email, numTel, password,userType);
         this.region = region;
         this.userRegionMaritimeType = userRegionMaritimeType;
     }

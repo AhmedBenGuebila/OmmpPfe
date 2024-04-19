@@ -23,15 +23,17 @@ public class User {
     private String nom;
     private String prenom;
     @Column(unique = true)
-    private int cin;
+    private Long matricule;
     @Email
     @Column(unique = true)
     private String email;
     @Column(unique = true)
     private Long numTel;
     private String password;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
-    public User(Long idUser, String nom, String prenom, int cin, String email, Long numTel, String password) {
+    public User(Long idUser, String nom, String prenom, Long matricule, String email, Long numTel, String password,UserType userType) {
     }
 
 
