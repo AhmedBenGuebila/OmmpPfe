@@ -24,6 +24,7 @@ public class TableauDeBordFinalController {
 
     @PostMapping
     public ResponseEntity<TableauDeBordFinal> createTableauDeBordFinal(@RequestBody TableauDeBordFinal tableauDeBordFinal) {
+        tableauDeBordFinal.setEtatTBF(TableauDeBordFinal.EtatTBF.enAttente);
         TableauDeBordFinal newTableauDeBordFinal = tableauDeBordFinalService.saveTableauDeBordFinal(tableauDeBordFinal);
         return new ResponseEntity<>(newTableauDeBordFinal, HttpStatus.CREATED);
     }

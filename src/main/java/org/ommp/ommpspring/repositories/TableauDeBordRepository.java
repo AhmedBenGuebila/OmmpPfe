@@ -12,4 +12,5 @@ import java.util.List;
 public interface TableauDeBordRepository extends JpaRepository<TableauDeBord, Long> {
 
     List<TableauDeBord> findByTableauDeBordFinalIdTBF(Long tableauDeBordFinalId);
+
 }

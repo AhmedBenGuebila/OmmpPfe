@@ -11,6 +11,10 @@ import java.util.Set;
 @Service
 public interface IDonneesMensuellesService {
     boolean existeDonneesMensuellesPourMoisEtTableauDeBord(Long tableauDeBordId, DonneesMensuelles.Mois mois);
+    boolean existeDonneesMensuellesPourTrimestreEtTableauDeBord(Long tableauDeBordId, DonneesMensuelles.Trimestre trimestre);
+    boolean existeDonneesMensuellesPourSemestreEtTableauDeBord(Long tableauDeBordId, DonneesMensuelles.Semestre semestre);
+    boolean existeDonneesMensuellesPourAnneeEtTableauDeBord(Long tableauDeBordId, DonneesMensuelles.Annee annee);
+
     DonneesMensuelles saveDonnees(DonneesMensuelles donneesMensuelles);
 
     DonneesMensuelles updateDonnees(DonneesMensuelles donneesMensuelles);
@@ -22,4 +26,5 @@ public interface IDonneesMensuellesService {
     List<DonneesMensuelles> getAllDonnees();
 
     List<DonneesMensuelles> getDonneesMensuellesByTableauDeBordId(Long tableauDeBordId) ;
+
 }

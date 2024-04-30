@@ -63,5 +63,15 @@ public class TableauDeBordController {
         return new ResponseEntity<>(createdTableauDeBord, HttpStatus.CREATED);
     }
 
+    @GetMapping("/by-final/{tableauDeBordFinalId}")
+    public ResponseEntity<List<TableauDeBord>> getAllTableauxDeBordByFinalId(@PathVariable Long tableauDeBordFinalId) {
+        List<TableauDeBord> tableauxDeBord = tableauDeBordService.getAllTableauxDeBordByFinalId(tableauDeBordFinalId);
+        if (tableauxDeBord.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(tableauxDeBord);
+        }
+    }
+
 
 }

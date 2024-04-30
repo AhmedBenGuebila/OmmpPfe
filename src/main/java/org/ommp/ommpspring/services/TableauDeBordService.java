@@ -54,6 +54,11 @@ public class TableauDeBordService implements ITableauDeBordService {
     }
 
     @Override
+    public List<TableauDeBord> getAllTableauxDeBordByFinalId(Long tableauDeBordFinalId) {
+        return tableauDeBordRepository.findByTableauDeBordFinalIdTBF(tableauDeBordFinalId);
+    }
+
+    @Override
     public TableauDeBord createTableauDeBordAndAssignToFinal(Long tableauDeBordFinalId, TableauDeBord tableauDeBord) {
         Optional<TableauDeBordFinal> optionalTableauDeBordFinal = tableauDeBordFinalRepository.findById(tableauDeBordFinalId);
         if (optionalTableauDeBordFinal.isPresent()) {

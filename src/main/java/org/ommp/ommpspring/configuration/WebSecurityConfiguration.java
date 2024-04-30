@@ -30,9 +30,9 @@ public class WebSecurityConfiguration {
         httpSecurity.csrf().disable()
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/signup/**", "/login","/api/**")
+                                .requestMatchers("/signup/**", "/login")
                                 .permitAll()
-                                .requestMatchers("/test").authenticated()
+                                .requestMatchers("/api/**").authenticated()
                 )
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

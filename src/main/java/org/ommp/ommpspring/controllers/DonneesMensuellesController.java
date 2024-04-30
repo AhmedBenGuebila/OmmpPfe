@@ -4,12 +4,15 @@ import org.ommp.ommpspring.IService.IDonneesMensuellesService;
 import org.ommp.ommpspring.IService.ITableauDeBordService;
 import org.ommp.ommpspring.entities.DonneesMensuelles;
 import org.ommp.ommpspring.entities.TableauDeBord;
+import org.ommp.ommpspring.entities.TableauDeBordFinal;
 import org.ommp.ommpspring.services.TableauDeBordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +28,21 @@ public class DonneesMensuellesController {
 
     @PostMapping("/create-and-assign/{tableauDeBordId}")
     public ResponseEntity<DonneesMensuelles> createAndAssignDonneesMensuellesToTableauDeBord(@PathVariable Long tableauDeBordId, @RequestBody DonneesMensuelles donneesMensuelles) {
-        boolean existeDeja = donneesMensuellesService.existeDonneesMensuellesPourMoisEtTableauDeBord(tableauDeBordId, donneesMensuelles.getMois());
+        boolean existeDeja = true;
+
+         if (tableauDeBordService.getTBById(tableauDeBordId).get().getTableauDeBordFinal().getFrequenceDeMesure().equals(TableauDeBordFinal.FrequenceDeMesure.MOIS)) {
+
+            existeDeja = donneesMensuellesService.existeDonneesMensuellesPourMoisEtTableauDeBord(tableauDeBordId, donneesMensuelles.getMois());
+
+        } else if (tableauDeBordService.getTBById(tableauDeBordId).get().getTableauDeBordFinal().getFrequenceDeMesure().equals(TableauDeBordFinal.FrequenceDeMesure.TRIMESTRE)) {
+            existeDeja = donneesMensuellesService.existeDonneesMensuellesPourTrimestreEtTableauDeBord(tableauDeBordId, donneesMensuelles.getTrimestre());
+        } else if (tableauDeBordService.getTBById(tableauDeBordId).get().getTableauDeBordFinal().getFrequenceDeMesure().equals(TableauDeBordFinal.FrequenceDeMesure.SEMESTRE)) {
+            existeDeja = donneesMensuellesService.existeDonneesMensuellesPourSemestreEtTableauDeBord(tableauDeBordId, donneesMensuelles.getSemestre());
+        } else if (tableauDeBordService.getTBById(tableauDeBordId).get().getTableauDeBordFinal().getFrequenceDeMesure().equals(TableauDeBordFinal.FrequenceDeMesure.ANNEE)) {
+            existeDeja = donneesMensuellesService.existeDonneesMensuellesPourAnneeEtTableauDeBord(tableauDeBordId, donneesMensuelles.getAnnee());
+        }
+
+
         if (existeDeja) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
         }
@@ -35,13 +52,48 @@ public class DonneesMensuellesController {
             TableauDeBord tableauDeBord = tableauDeBordOptional.get();
             donneesMensuelles.setTableauDeBord(tableauDeBord);
 
-            if (donneesMensuelles.getValeur2() != 0) {
-                double taux = (float)donneesMensuelles.getValeur1() / (float)donneesMensuelles.getValeur2();
-                donneesMensuelles.setTaux(taux);
-            } else {
-
-                donneesMensuelles.setTaux(0);
+            if (donneesMensuelles.getTableauDeBord().getTableauDeBordFinal().getMethodeDeCalcul().equals(TableauDeBordFinal.MethodeDeCalcul.M1)){
+                if (donneesMensuelles.getValeur2() != 0) {
+                    BigDecimal val1 = new BigDecimal(donneesMensuelles.getValeur1());
+                    BigDecimal val2 = new BigDecimal(donneesMensuelles.getValeur2());
+                    BigDecimal taux = val1.divide(val2, 3, RoundingMode.HALF_UP);
+                    taux = taux.multiply(new BigDecimal(100));
+                    donneesMensuelles.setTaux(taux.doubleValue());
+                } else {
+                    donneesMensuelles.setTaux(0);
+                }
             }
+            if (donneesMensuelles.getTableauDeBord().getTableauDeBordFinal().getMethodeDeCalcul().equals(TableauDeBordFinal.MethodeDeCalcul.M2)){
+                if (donneesMensuelles.getValeur2() != 0) {
+                    BigDecimal val1 = new BigDecimal(donneesMensuelles.getValeur1()).multiply(new BigDecimal(1000));
+                    BigDecimal val2 = new BigDecimal(donneesMensuelles.getValeur2());
+                    BigDecimal taux = val1.divide(val2, 3, RoundingMode.HALF_UP);
+                    donneesMensuelles.setTaux(taux.doubleValue());
+                } else {
+                    donneesMensuelles.setTaux(0);
+                }
+            }
+            if (donneesMensuelles.getTableauDeBord().getTableauDeBordFinal().getMethodeDeCalcul().equals(TableauDeBordFinal.MethodeDeCalcul.M3)){
+                if (donneesMensuelles.getValeur2() != 0) {
+                    BigDecimal val1 = new BigDecimal(donneesMensuelles.getValeur1()).multiply(new BigDecimal(1000000));
+                    BigDecimal val2 = new BigDecimal(donneesMensuelles.getValeur2());
+                    BigDecimal taux = val1.divide(val2, 3, RoundingMode.HALF_UP);
+
+                    donneesMensuelles.setTaux(taux.doubleValue());
+                } else {
+                    donneesMensuelles.setTaux(0);
+                }
+            }
+            if (donneesMensuelles.getTableauDeBord().getTableauDeBordFinal().getMethodeDeCalcul().equals(TableauDeBordFinal.MethodeDeCalcul.M4)){
+                donneesMensuelles.setTaux(donneesMensuelles.getValeur1());
+            }
+            if (donneesMensuelles.getTableauDeBord().getTableauDeBordFinal().getMethodeDeCalcul().equals(TableauDeBordFinal.MethodeDeCalcul.M5)){
+                donneesMensuelles.setTaux(donneesMensuelles.getValeur1());
+            }
+
+
+
+
             DonneesMensuelles newDonneesMensuelles = donneesMensuellesService.saveDonnees(donneesMensuelles);
             return new ResponseEntity<>(newDonneesMensuelles, HttpStatus.CREATED);
         } else {
@@ -87,5 +139,15 @@ public class DonneesMensuellesController {
     public ResponseEntity<List<DonneesMensuelles>> getAllDonneesMensuelles() {
         List<DonneesMensuelles> donneesMensuellesList = donneesMensuellesService.getAllDonnees();
         return new ResponseEntity<>(donneesMensuellesList, HttpStatus.OK);
+    }
+
+    @GetMapping("/by-tb/{tableauDeBordId}")
+    public ResponseEntity<List<DonneesMensuelles>> getAllDonneesMensuellesByTBId(@PathVariable Long tableauDeBordId) {
+        List<DonneesMensuelles> donneesMensuelles = donneesMensuellesService.getDonneesMensuellesByTableauDeBordId(tableauDeBordId);
+        if (donneesMensuelles.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(donneesMensuelles);
+        }
     }
 }

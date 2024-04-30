@@ -26,6 +26,22 @@ public class DonneesMensuellesService implements IDonneesMensuellesService {
         Optional<DonneesMensuelles> donneesMensuelles = donneesMensuellesRepository.findByTableauDeBordIdTBAndAndMois(tableauDeBordId, mois);
         return donneesMensuelles.isPresent();
     }
+    @Override
+    public boolean existeDonneesMensuellesPourTrimestreEtTableauDeBord(Long tableauDeBordId, DonneesMensuelles.Trimestre mois) {
+        Optional<DonneesMensuelles> donneesMensuelles = donneesMensuellesRepository.findByTableauDeBordIdTBAndAndTrimestre(tableauDeBordId, mois);
+        return donneesMensuelles.isPresent();
+    }
+    @Override
+    public boolean existeDonneesMensuellesPourSemestreEtTableauDeBord(Long tableauDeBordId, DonneesMensuelles.Semestre mois) {
+        Optional<DonneesMensuelles> donneesMensuelles = donneesMensuellesRepository.findByTableauDeBordIdTBAndAndSemestre(tableauDeBordId, mois);
+        return donneesMensuelles.isPresent();
+    }
+    @Override
+    public boolean existeDonneesMensuellesPourAnneeEtTableauDeBord(Long tableauDeBordId, DonneesMensuelles.Annee mois) {
+        Optional<DonneesMensuelles> donneesMensuelles = donneesMensuellesRepository.findByTableauDeBordIdTBAndAndAnnee(tableauDeBordId, mois);
+        return donneesMensuelles.isPresent();
+    }
+
 
     @Override
     public DonneesMensuelles saveDonnees(DonneesMensuelles donneesMensuelles) {

@@ -22,6 +22,8 @@ public interface ITableauDeBordService {
 
     List<TableauDeBord> getAllTB();
 
+    List<TableauDeBord> getAllTableauxDeBordByFinalId(Long tableauDeBordFinalId);
+
     TableauDeBord createTableauDeBordAndAssignToFinal(Long tableauDeBordFinalId, TableauDeBord tableauDeBord);
 
     boolean regionOuPortExisteDeja(Long tableauDeBordFinalId, UserRegionMaritime.Region region, UserPort.Port port);

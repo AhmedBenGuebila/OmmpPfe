@@ -26,6 +26,8 @@ public class TableauDeBord {
     @OneToMany(mappedBy = "tableauDeBord", cascade = CascadeType.ALL)
     private Set<DonneesMensuelles> donneesMensuellesSet;
 
+
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "idTBF")

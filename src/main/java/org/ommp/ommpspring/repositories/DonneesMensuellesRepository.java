@@ -14,4 +14,8 @@ public interface DonneesMensuellesRepository extends JpaRepository<DonneesMensue
     List<DonneesMensuelles> findByTableauDeBordIdTB(Long tableauDeBordId);
 
     Optional<DonneesMensuelles> findByTableauDeBordIdTBAndAndMois(Long tableauDeBordId, DonneesMensuelles.Mois mois);
+    Optional<DonneesMensuelles> findByTableauDeBordIdTBAndAndAnnee(Long tableauDeBordId, DonneesMensuelles.Annee annee);
+    Optional<DonneesMensuelles> findByTableauDeBordIdTBAndAndSemestre(Long tableauDeBordId, DonneesMensuelles.Semestre semestre);
+    Optional<DonneesMensuelles> findByTableauDeBordIdTBAndAndTrimestre(Long tableauDeBordId, DonneesMensuelles.Trimestre mois);
+
 }
