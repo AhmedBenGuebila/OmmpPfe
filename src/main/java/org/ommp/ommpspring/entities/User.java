@@ -48,4 +48,14 @@ public class User {
     )
 
     private Set<Document> documents;
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "user_tableau_de_bord",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "tableau_de_bord_id")
+    )
+
+    private Set<TableauDeBord> tableauDeBords;
 }

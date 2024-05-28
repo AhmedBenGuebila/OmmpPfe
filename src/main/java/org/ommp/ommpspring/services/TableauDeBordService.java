@@ -5,13 +5,13 @@ import org.ommp.ommpspring.entities.*;
 import org.ommp.ommpspring.repositories.DonneesMensuellesRepository;
 import org.ommp.ommpspring.repositories.TableauDeBordFinalRepository;
 import org.ommp.ommpspring.repositories.TableauDeBordRepository;
+import org.ommp.ommpspring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class TableauDeBordService implements ITableauDeBordService {
@@ -22,6 +22,8 @@ public class TableauDeBordService implements ITableauDeBordService {
     private TableauDeBordRepository tableauDeBordRepository;
     @Autowired
     private TableauDeBordFinalRepository tableauDeBordFinalRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public TableauDeBord saveTB(TableauDeBord tableauDeBord) {
@@ -79,6 +81,57 @@ public class TableauDeBordService implements ITableauDeBordService {
             }
         }
         return false;
+    }
+
+
+    @Override
+    public TableauDeBord affecterUtilisateur(Long TBId, Long userId) {
+        Optional<TableauDeBord> tableauDeBordOptional = tableauDeBordRepository.findById(TBId);
+        if (tableauDeBordOptional.isPresent()) {
+            TableauDeBord tableauDeBord = tableauDeBordOptional.get();
+            Optional<User> userOptional = userRepository.findById(userId);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                tableauDeBord.addUser(user);
+                return tableauDeBordRepository.save(tableauDeBord);
+            } else {
+                throw new RuntimeException("User not found with ID: " + userId);
+            }
+        } else {
+            throw new RuntimeException("Document not found with ID: " + TBId);
+        }
+    }
+
+
+
+    @Override
+    public TableauDeBord desaffecterUtilisateur(Long TBId, Long userId) {
+        Optional<TableauDeBord> tableauDeBordOptional = tableauDeBordRepository.findById(TBId);
+        if (tableauDeBordOptional.isPresent()) {
+            TableauDeBord tableauDeBord = tableauDeBordOptional.get();
+            Optional<User> userOptional = userRepository.findById(userId);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                tableauDeBord.removeUser(user);
+                return tableauDeBordRepository.save(tableauDeBord);
+            } else {
+                throw new RuntimeException("TB not found with ID: " + userId);
+            }
+        } else {
+            throw new RuntimeException("TB not found with ID: " + TBId);
+        }
+    }
+
+
+    @Override
+    public Set<TableauDeBord> getTableauxDeBordByUserId(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.getTableauDeBords();
+        } else {
+            throw new RuntimeException("User not found with ID: " + userId);
+        }
     }
 
 }

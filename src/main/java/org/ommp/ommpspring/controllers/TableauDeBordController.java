@@ -1,26 +1,90 @@
 package org.ommp.ommpspring.controllers;
 
+import org.ommp.ommpspring.EmailService;
 import org.ommp.ommpspring.IService.IDonneesMensuellesService;
 import org.ommp.ommpspring.IService.ITableauDeBordFinalService;
 import org.ommp.ommpspring.IService.ITableauDeBordService;
+import org.ommp.ommpspring.IService.IUserService;
 import org.ommp.ommpspring.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RequestMapping("/api/tableaux-de-bord")
 public class TableauDeBordController {
-
+    @Autowired
+    private EmailService emailService;
     @Autowired
     private ITableauDeBordService tableauDeBordService;
     @Autowired
     private ITableauDeBordFinalService tableauDeBordFinalService;
+    @Autowired
+    private IUserService userService;
+
+
+    @GetMapping("/tableauxDeBordByUser/{userId}")
+    public ResponseEntity<Set<TableauDeBord>> getTableauxDeBordByUserId(@PathVariable Long userId) {
+        try {
+            Set<TableauDeBord> tableauDeBords = tableauDeBordService.getTableauxDeBordByUserId(userId);
+            return new ResponseEntity<>(tableauDeBords, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/affecter/{TBId}/{userId}")
+    public ResponseEntity<TableauDeBord> affecterUtilisateurAuTableauDeBord(@PathVariable Long TBId, @PathVariable Long userId) throws ChangeSetPersister.NotFoundException {
+        TableauDeBord updatedTableauDeBord = tableauDeBordService.affecterUtilisateur(TBId, userId);
+
+        if (updatedTableauDeBord != null) {
+            Optional<User> userOptional = userService.getUserById(userId);
+            User user = userOptional.get();
+            emailService.sendSimpleMessage(user.getEmail(),"l'Office Des ports et des Regions maritime Document", "Bonjour " + user.getNom() + ",\n\n" +
+                    "Vous avez un tableau de bord a remplir.\n\n" +
+                    "Voici les détails du tableau de bord :\n" +
+                    "Process: " + updatedTableauDeBord.getTableauDeBordFinal().getNom() + "\n" +
+                    "Annee : " + updatedTableauDeBord.getTableauDeBordFinal().getAnnee() + "\n" +
+                    "Frequence de mesure : " + updatedTableauDeBord.getTableauDeBordFinal().getFrequenceDeMesure() + "\n\n" +
+
+                    "Vous pouvez vous connecter à travers ce lien.\n\n" +
+                    "http://localhost:4200/#/authentifications/login\n"+
+                    "Cordialement,\n" +
+                    "L'équipe OMMP" );
+            return new ResponseEntity<>(updatedTableauDeBord, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @PostMapping("/desaffecter/{TBId}/{userId}")
+    public ResponseEntity<TableauDeBord> desaffecterUtilisateurDuTableauDeBord(@PathVariable Long TBId, @PathVariable Long userId) {
+        TableauDeBord updatedTableauDeBord = tableauDeBordService.desaffecterUtilisateur(TBId, userId);
+        if (updatedTableauDeBord != null) {
+            Optional<User> userOptional = userService.getUserById(userId);
+            User user = userOptional.get();
+            emailService.sendSimpleMessage(user.getEmail(),"l'Office Des ports et des Regions maritime Document", "Bonjour " + user.getNom() + ",\n\n" +
+                    "Vous n'avez pas access a ce tableau de bord.\n\n" +
+                    "Voici les détails du tableau de bord :\n" +
+                    "Process: " + updatedTableauDeBord.getTableauDeBordFinal().getNom() + "\n" +
+                    "Annee : " + updatedTableauDeBord.getTableauDeBordFinal().getAnnee() + "\n\n" +
+
+
+                    "Vous pouvez vous connecter à travers ce lien.\n\n" +
+                    "http://localhost:4200/#/authentifications/login\n"+
+                    "Cordialement,\n" +
+                    "L'équipe OMMP" );
+            return new ResponseEntity<>(updatedTableauDeBord, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @PostMapping
     public ResponseEntity<TableauDeBord> createTableauDeBord(@RequestBody TableauDeBord tableauDeBord) {

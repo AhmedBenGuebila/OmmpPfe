@@ -1,6 +1,7 @@
 package org.ommp.ommpspring.controllers;
 
 import io.swagger.annotations.Api;
+import org.ommp.ommpspring.EmailService;
 import org.ommp.ommpspring.IService.IDocumentService;
 import org.ommp.ommpspring.IService.IUserService;
 import org.ommp.ommpspring.entities.Document;
@@ -27,6 +28,10 @@ public class DocumentController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private EmailService emailService;
+
+
 
 
     @PostMapping
@@ -71,15 +76,7 @@ public class DocumentController {
         return new ResponseEntity<>(documents, HttpStatus.OK);
     }
 
-    @PostMapping("/affecter/{documentId}/{userId}")
-    public ResponseEntity<Document> affecterUtilisateurAuDocument(@PathVariable Long documentId, @PathVariable Long userId) throws ChangeSetPersister.NotFoundException {
-        Document updatedDocument = documentService.affecterUtilisateur(documentId, userId);
-        if (updatedDocument != null) {
-            return new ResponseEntity<>(updatedDocument, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+
 
     @GetMapping("/document-url/{documentId}")
     public ResponseEntity<String> getDocumentUrl(@PathVariable Long documentId) {
@@ -105,11 +102,47 @@ public class DocumentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @PostMapping("/affecter/{documentId}/{userId}")
+    public ResponseEntity<Document> affecterUtilisateurAuDocument(@PathVariable Long documentId, @PathVariable Long userId) throws ChangeSetPersister.NotFoundException {
+        Document updatedDocument = documentService.affecterUtilisateur(documentId, userId);
 
+        if (updatedDocument != null) {
+            Optional<User> userOptional = userService.getUserById(userId);
+            User user = userOptional.get();
+            emailService.sendSimpleMessage(user.getEmail(),"l'Office Des ports et des Regions maritime Document", "Bonjour " + user.getNom() + ",\n\n" +
+                    "Un document vous a ete affecter pour le cosulter.\n" +
+                    "Veuillez consulter votre compte.\n\n" +
+                    "Voici les détails du document :\n" +
+                    "Type du document: " + updatedDocument.getDocumentType() + "\n" +
+                    "Nom : " + updatedDocument.getTitre() + "\n" +
+                    "Date de creation :" + updatedDocument.getDateCreation() +"\n\n" +
+
+                    "Vous pouvez vous connecter à travers ce lien.\n\n" +
+                    "http://localhost:4200/#/authentifications/login\n"+
+                    "Cordialement,\n" +
+                    "L'équipe OMMP" );
+            return new ResponseEntity<>(updatedDocument, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     @PostMapping("/desaffecter/{documentId}/{userId}")
     public ResponseEntity<Document> desaffecterUtilisateurDuDocument(@PathVariable Long documentId, @PathVariable Long userId) {
         Document updatedDocument = documentService.desaffecterUtilisateur(documentId, userId);
         if (updatedDocument != null) {
+            Optional<User> userOptional = userService.getUserById(userId);
+            User user = userOptional.get();
+            emailService.sendSimpleMessage(user.getEmail(),"l'Office Des ports et des Regions maritime Document", "Bonjour " + user.getNom() + ",\n\n" +
+                    "Vous navez plus access a ce document.\n\n" +
+                    "Voici les détails du document :\n" +
+                    "Type du document: " + updatedDocument.getDocumentType() + "\n" +
+                    "Nom : " + updatedDocument.getTitre() + "\n" +
+                    "Date de creation :" + updatedDocument.getDateCreation() +"\n\n" +
+
+                    "Vous pouvez vous connecter à travers ce lien.\n\n" +
+                    "http://localhost:4200/#/authentifications/login\n"+
+                    "Cordialement,\n" +
+                    "L'équipe OMMP" );
             return new ResponseEntity<>(updatedDocument, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

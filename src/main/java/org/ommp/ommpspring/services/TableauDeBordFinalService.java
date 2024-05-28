@@ -1,11 +1,8 @@
 package org.ommp.ommpspring.services;
 
 import org.ommp.ommpspring.IService.ITableauDeBordFinalService;
-import org.ommp.ommpspring.IService.ITableauDeBordService;
-import org.ommp.ommpspring.entities.Site;
 import org.ommp.ommpspring.entities.TableauDeBord;
 import org.ommp.ommpspring.entities.TableauDeBordFinal;
-import org.ommp.ommpspring.repositories.DonneesMensuellesRepository;
 import org.ommp.ommpspring.repositories.TableauDeBordFinalRepository;
 import org.ommp.ommpspring.repositories.TableauDeBordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +18,8 @@ public class TableauDeBordFinalService implements ITableauDeBordFinalService {
     @Autowired
     private TableauDeBordFinalRepository tableauDeBordFinalRepository;
 
-
+    @Autowired
+    private TableauDeBordRepository tableauDeBordRepository;
 
 
 
@@ -48,6 +46,15 @@ public class TableauDeBordFinalService implements ITableauDeBordFinalService {
     @Override
     public Optional<TableauDeBordFinal> getTableauDeBordFinalById(Long tableauDeBordFinalId) {
         return tableauDeBordFinalRepository.findById(tableauDeBordFinalId);
+    }
+
+
+
+    @Override
+    public Optional<TableauDeBordFinal> getTableauDeBordFinalByIdTB(Long tableauDeBordlId) {
+        Optional<TableauDeBord> tableauDeBord=tableauDeBordRepository.findById(tableauDeBordlId);
+
+        return tableauDeBordFinalRepository.findById(tableauDeBord.get().getTableauDeBordFinal().getIdTBF());
     }
 
     @Override

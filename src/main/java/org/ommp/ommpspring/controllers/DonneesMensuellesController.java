@@ -5,7 +5,6 @@ import org.ommp.ommpspring.IService.ITableauDeBordService;
 import org.ommp.ommpspring.entities.DonneesMensuelles;
 import org.ommp.ommpspring.entities.TableauDeBord;
 import org.ommp.ommpspring.entities.TableauDeBordFinal;
-import org.ommp.ommpspring.services.TableauDeBordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +24,43 @@ public class DonneesMensuellesController {
     private IDonneesMensuellesService donneesMensuellesService;
     @Autowired
     private ITableauDeBordService tableauDeBordService;
+
+
+    @PostMapping("/calcul/{val1}/{val2}")
+    public ResponseEntity<Double> calculerTaux(@PathVariable Double val1, @PathVariable Double val2, @RequestBody TableauDeBordFinal.MethodeDeCalcul M){
+        if (val2 == 0) {
+
+            return ResponseEntity.badRequest().body(null);
+        }
+        BigDecimal valeur1 = new BigDecimal(val1);
+        BigDecimal valeur2 = new BigDecimal(val2);
+        BigDecimal taux;
+        switch (M) {
+            case M1:
+                taux = valeur1.divide(valeur2, 3, RoundingMode.HALF_UP).multiply(new BigDecimal(100));
+                break;
+            case M2:
+                taux = valeur1.multiply(new BigDecimal(1000)).divide(valeur2, 3, RoundingMode.HALF_UP);
+                break;
+            case M3:
+                taux = valeur1.multiply(new BigDecimal(1000000)).divide(valeur2, 3, RoundingMode.HALF_UP);
+                break;
+            case M4:
+              //  taux =(valeur1 - valeur2)/valeur1
+                taux=valeur1;
+                break;
+            case M5:
+
+                return ResponseEntity.ok(val1);
+            default:
+
+                return ResponseEntity.badRequest().body(null);
+        }
+
+        return ResponseEntity.ok(taux.doubleValue());
+    }
+
+
 
     @PostMapping("/create-and-assign/{tableauDeBordId}")
     public ResponseEntity<DonneesMensuelles> createAndAssignDonneesMensuellesToTableauDeBord(@PathVariable Long tableauDeBordId, @RequestBody DonneesMensuelles donneesMensuelles) {

@@ -34,6 +34,9 @@ public class TableauDeBordFinal {
     @Enumerated(EnumType.STRING)
     public Secteur secteur;
 
+    public String valeur1;
+    public String valeur2;
+
     public enum FrequenceDeMesure {
         MOIS,
         ANNEE,
@@ -52,9 +55,9 @@ public class TableauDeBordFinal {
         approuve , enAttente
     }
     public enum Secteur {
-        PORT , REGION, SIEGE
+        PORT , REGION
     }
 
-    @OneToMany(mappedBy = "tableauDeBordFinal", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tableauDeBordFinal", cascade = CascadeType.REMOVE)
     private Set<TableauDeBord> tableauDeBordSet;
 }

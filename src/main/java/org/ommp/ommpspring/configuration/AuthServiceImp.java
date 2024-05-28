@@ -1,5 +1,6 @@
 package org.ommp.ommpspring.configuration;
 
+import org.ommp.ommpspring.EmailService;
 import org.ommp.ommpspring.entities.*;
 import org.ommp.ommpspring.repositories.*;
 import org.springframework.beans.BeanUtils;
@@ -18,7 +19,8 @@ public class AuthServiceImp implements AuthService {
     private final UserAdminRepository userAdminRepository;
     private final UserSiegeRepository userSiegeRepository;
     private final PasswordEncoder passwordEncoder;
-
+    @Autowired
+    private EmailService emailService;
     @Autowired
     public AuthServiceImp(UserRepository userRepository,
                           UserRegionMaritimeRepository userRegionMaritimeRepository,
@@ -67,6 +69,17 @@ public class AuthServiceImp implements AuthService {
             userSiegeRepository.save((UserSiege) user);
         }
 
+        emailService.sendSimpleMessage(user.getEmail(),"Compte pour la Platforme de l'Office Des ports et des Regions maritime", "Bonjour " + user.getNom() + ",\n\n" +
+                "Nous sommes ravis de vous informer que votre compte sur notre plateforme a été créé avec succès.\n\n" +
+                "Voici les détails de Connection :\n" +
+                "Nom d'utilisateur : " + user.getPrenom() + "\n" +
+                "Email : " + user.getEmail() + "\n" +
+                "Mot de passe :" + signupRequest.getPassword() +"\n\n" +
+
+                "Vous pouvez maintenant vous connecter et commencer à utiliser nos services.\n\n" +
+                "http://localhost:4200/#/authentifications/login\n"+
+                "Cordialement,\n" +
+                "L'équipe OMMP" );
             return true;
         }
 

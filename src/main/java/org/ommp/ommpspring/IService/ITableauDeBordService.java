@@ -27,4 +27,11 @@ public interface ITableauDeBordService {
     TableauDeBord createTableauDeBordAndAssignToFinal(Long tableauDeBordFinalId, TableauDeBord tableauDeBord);
 
     boolean regionOuPortExisteDeja(Long tableauDeBordFinalId, UserRegionMaritime.Region region, UserPort.Port port);
+
+    TableauDeBord affecterUtilisateur(Long TBId, Long userId);
+
+    TableauDeBord desaffecterUtilisateur(Long TBId, Long userId);
+
+    Set<TableauDeBord> getTableauxDeBordByUserId(Long userId);
+
 }

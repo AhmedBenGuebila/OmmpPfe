@@ -23,15 +23,29 @@ public class TableauDeBord {
     private UserPort.Port port;
     private UserRegionMaritime.Region region;
 
+
+
+    public void addUser(User user) {
+        this.users.add(user);
+        user.getTableauDeBords().add(this);
+    }
+
+    public void removeUser(User user) {
+        this.users.remove(user);
+        user.getTableauDeBords().remove(this);
+    }
+
     @OneToMany(mappedBy = "tableauDeBord", cascade = CascadeType.ALL)
     private Set<DonneesMensuelles> donneesMensuellesSet;
-
-
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "idTBF")
     private TableauDeBordFinal tableauDeBordFinal;
 
+
+
+    @ManyToMany(mappedBy = "tableauDeBords", cascade = CascadeType.ALL)
+    private Set<User> users;
 
 }

@@ -16,6 +16,8 @@ public interface ITableauDeBordFinalService {
     void deleteTableauDeBordFinal(Long tableauDeBordFinalId);
 
     Optional<TableauDeBordFinal> getTableauDeBordFinalById(Long tableauDeBordFinalId);
+    Optional<TableauDeBordFinal> getTableauDeBordFinalByIdTB(Long tableauDeBordId);
+
 
     List<TableauDeBordFinal> getAllTableauDeBordFinal();
 }

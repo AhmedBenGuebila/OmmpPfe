@@ -1,10 +1,13 @@
 package org.ommp.ommpspring.configuration;
 
+import org.ommp.ommpspring.entities.User;
 import org.ommp.ommpspring.entities.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
@@ -62,6 +65,7 @@ public class SignupController {
 
     private ResponseEntity<String> generateResponse(boolean isUserCreated, String userType) {
         if (isUserCreated) {
+
             return ResponseEntity.status(HttpStatus.CREATED).body(userType + " created successfully");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to create " + userType);

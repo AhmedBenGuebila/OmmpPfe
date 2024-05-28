@@ -48,6 +48,12 @@ public class TableauDeBordFinalController {
         return tableauDeBordFinalOptional.map(tableauDeBordFinal -> new ResponseEntity<>(tableauDeBordFinal, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+    @GetMapping("/getOneByIdTBF/{id}")
+    public ResponseEntity<TableauDeBordFinal> getTableauDeBordFinalByIdTB(@PathVariable Long id) {
+        Optional<TableauDeBordFinal> tableauDeBordFinalOptional = tableauDeBordFinalService.getTableauDeBordFinalByIdTB(id);
+        return tableauDeBordFinalOptional.map(tableauDeBordFinal -> new ResponseEntity<>(tableauDeBordFinal, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<TableauDeBordFinal>> getAllTableauxDeBord() {

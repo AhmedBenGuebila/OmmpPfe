@@ -44,7 +44,16 @@ public class DocumentService implements IDocumentService
     public List<Document> getAllDocuments() {
         return documentRepository.findAll();
     }
-
+    @Override
+    public Set<Document> getDocumentsByUserId(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return user.getDocuments();
+        } else {
+            throw new RuntimeException("User not found with ID: " + userId);
+        }
+    }
     @Override
     public Document affecterUtilisateur(Long documentId, Long userId) {
         Optional<Document> documentOptional = documentRepository.findById(documentId);
@@ -63,16 +72,7 @@ public class DocumentService implements IDocumentService
         }
     }
 
-    @Override
-    public Set<Document> getDocumentsByUserId(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            return user.getDocuments();
-        } else {
-            throw new RuntimeException("User not found with ID: " + userId);
-        }
-    }
+
 
     @Override
     public Document desaffecterUtilisateur(Long documentId, Long userId) {
