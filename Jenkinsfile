@@ -27,7 +27,7 @@ pipeline {
                     branches: [[name: '*/Devops']],
                     doGenerateSubmoduleConfigurations: false,
                     extensions: [[$class: 'CloneOption', timeout: 30]],
-                    userRemoteConfigs: [[url: '<repository-url>']]
+                    userRemoteConfigs: [[url: 'https://github.com/AhmedBenGuebila/OmmpPfe.git']]
                 ])
             }
         }
