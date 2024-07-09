@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, Long> {
 
-
+    boolean existsByTitre(String title);
+    boolean existsByUrl(String url);
 
 }

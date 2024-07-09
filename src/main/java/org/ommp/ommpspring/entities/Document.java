@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,17 +30,22 @@ public class Document {
 
     @Enumerated(EnumType.STRING)
     private Document.DocumentType documentType;
-
     @Enumerated(EnumType.STRING)
-    private Document.ConcerneType concerneType;
+    private Document.Type type;
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
+    private List<TypeSMQ> typeSMQ;
 
 
 
-    public enum ConcerneType {
-        port,regionMaritime
+    public enum TypeSMQ {
+        port,region_maritime,siege
+    }
+    public enum Type {
+        procedure, precess ,instruction_de_travail ,politique_qualitee , manuel_qualite , tableau_de_bord , autre
     }
     public enum DocumentType {
-        procedure, precess ,instruction ,PQ , MQ , TB
+        test1, test2 ,test3
     }
 
     public void addUser(User user) {

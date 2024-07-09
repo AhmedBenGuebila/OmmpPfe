@@ -15,6 +15,7 @@ C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\configur
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\services\TableauDeBordService.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\entities\UserRegionMaritime.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\IService\ISiteService.java
+C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\configuration\FilesStorageServiceImpl.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\controllers\UserPortController.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\services\UserSiegeService.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\entities\Site.java
@@ -23,6 +24,7 @@ C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\IService
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\configuration\SignupController.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\controllers\SiteController.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\controllers\UserController.java
+C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\configuration\EmailServiceImpl.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\configuration\WebSecurityConfiguration.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\repositories\SiteRepository.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\services\TableauDeBordFinalService.java
@@ -32,9 +34,11 @@ C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\services
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\configuration\filter.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\entities\TableauDeBord.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\repositories\DocumentRepository.java
+C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\configuration\FilesStorageService.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\IService\IUserAdminService.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\entities\UserPort.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\IService\ITableauDeBordService.java
+C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\EmailService.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\configuration\SimpleCorsFilter.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\entities\TableauDeBordFinal.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\IService\IUserService.java
@@ -48,11 +52,13 @@ C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\entities
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\controllers\UserSiegeController.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\entities\UserAdmin.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\repositories\DonneesMensuellesRepository.java
+C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\configuration\WebConfig.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\configuration\JwtRequestFilter.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\repositories\TableauDeBordFinalRepository.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\services\SiteService.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\entities\DonneesMensuelles.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\IService\IUserPortService.java
+C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\configuration\MailConfig.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\services\UserAdminService.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\controllers\UserRegionMaritimeController.java
 C:\Users\MSI\Desktop\copiepfe\OmmpPfe\src\main\java\org\ommp\ommpspring\services\UserService.java

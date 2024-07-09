@@ -46,8 +46,7 @@ public class DonneesMensuellesController {
                 taux = valeur1.multiply(new BigDecimal(1000000)).divide(valeur2, 3, RoundingMode.HALF_UP);
                 break;
             case M4:
-              //  taux =(valeur1 - valeur2)/valeur1
-                taux=valeur1;
+                taux = valeur1.subtract(valeur2).divide(valeur1, 3, RoundingMode.HALF_UP);
                 break;
             case M5:
 

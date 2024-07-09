@@ -20,7 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfiguration {
+public class WebSecurityConfiguration  {
 
     private final JwtRequestFilter jwtRequestFilter;
 
