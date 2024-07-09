@@ -1,4 +1,4 @@
 FROM openjdk:11
 EXPOSE 8089
-ADD target/ommp-3.0.jar ommp-3.0.jar
-ENTRYPOINT ["java", "-jar", "ommp-3.0.jar"]
+ADD target/ommpSpring-0.0.1-SNAPSHOT.jar ommpSpring-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java", "-jar", "ommpSpring-0.0.1-SNAPSHOT.jar"]
