@@ -55,11 +55,11 @@ pipeline {
          stage('Deploy') {
                      steps {
                             script {
-
+                                sh 'mvn nexus-staging:drop -DnexusUrl=http://localhost:8081/repository/maven-releases/'
                                 sh 'mvn deploy -DskipTests=true'
 
 
-                                sh 'mvn nexus-staging:drop -DnexusUrl=http://localhost:8081/repository/maven-releases/'
+
                             }
                         }
                              }
