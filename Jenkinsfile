@@ -47,24 +47,11 @@ pipeline {
         stage('SonarQube ') {
 
                      steps {
-                     script{
-                                   withSonarQubeEnv(credentialsId: 'sonar-api') {
-                                                   sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ahmed2000'
-                                             }
-                                 }
 
+                            sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ahmed2000'
                            }
                      }
-        stage('Quality Gate Status'){
 
-                  steps{
-
-                      script{
-
-                          waitForQualityGate abortPipeline: false, credentialsId: 'sonar-api'
-                      }
-                  }
-              }
          stage('Deploy') {
                      steps {
                             sh 'mvn deploy -DskipTests=true'
