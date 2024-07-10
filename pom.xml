@@ -155,7 +155,7 @@
                 <version>1.6.8</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>nexus</serverId>
+                    <serverId>deploymentRepo</serverId>
                     <nexusUrl>http://localhost:8081/repository/maven-releases/</nexusUrl>
                 </configuration>
             </plugin>
