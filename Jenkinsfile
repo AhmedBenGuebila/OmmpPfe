@@ -54,8 +54,14 @@ pipeline {
 
          stage('Deploy') {
                      steps {
-                            sh 'mvn deploy -DskipTests=true'
-                                 }
+                            script {
+
+                                sh 'mvn deploy -DskipTests=true'
+
+
+                                sh 'mvn nexus-staging:drop -DnexusUrl=http://localhost:8081/repository/maven-releases/'
+                            }
+                        }
                              }
 
                 stage('building docker image')
