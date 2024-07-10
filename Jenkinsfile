@@ -62,8 +62,8 @@ pipeline {
                                                 GROUP_ID="org.ommp"
                                                 ARTIFACT_ID="ommpSpring"
                                                 VERSION="0.0.1"
-                                                USERNAME="votre_nom_utilisateur"
-                                                PASSWORD="votre_mot_de_passe"
+                                                USERNAME="admin"
+                                                PASSWORD="ahmed2000"
 
                                                 response=$(curl -u "$USERNAME:$PASSWORD" -s "$NEXUS_URL/service/rest/v1/search?repository=$REPOSITORY&group=$GROUP_ID&name=$ARTIFACT_ID&version=$VERSION")
 
@@ -73,9 +73,10 @@ pipeline {
                                                 else
                                                     echo "Artefact non trouvé, pas besoin d'exécuter nexus-staging:drop"
                                                 fi
+                                                mvn deploy -DskipTests=true
                                                 '''
                                             }
-                                sh 'mvn deploy -DskipTests=true'
+
                         }
                              }
 
