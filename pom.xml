@@ -178,6 +178,9 @@
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <version>1.6.8</version>
+                <configuration>
+                    <serverId>deploymentRepo</serverId>
+                </configuration>
             </plugin>
         </plugins>
     </build>
