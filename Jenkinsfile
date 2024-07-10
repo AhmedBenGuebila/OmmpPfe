@@ -54,7 +54,7 @@ pipeline {
 
          stage('Deploy') {
                      steps {
-                              script {
+
                                                 sh '''
                                                 #!/bin/bash
                                                 NEXUS_URL="http://localhost:8081"
@@ -75,7 +75,7 @@ pipeline {
                                                 fi
                                                 mvn deploy -DskipTests=true
                                                 '''
-                                            }
+
 
                         }
                              }
