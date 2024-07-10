@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.ommp</groupId>
     <artifactId>ommpSpring</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>ommpSpring</name>
     <description>ommpSpring</description>
     <properties>
