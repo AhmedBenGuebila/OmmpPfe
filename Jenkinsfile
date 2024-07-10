@@ -45,11 +45,21 @@ pipeline {
         }
 
         stage('SonarQube ') {
+
                      steps {
                             sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ahmed2000'
                            }
                      }
+        stage('Quality Gate Status'){
 
+                  steps{
+
+                      script{
+
+                          waitForQualityGate abortPipeline: false, credentialsId: 'sonar-api'
+                      }
+                  }
+              }
          stage('Deploy') {
                      steps {
                             sh 'mvn deploy -DskipTests=true'
@@ -59,8 +69,8 @@ pipeline {
                 stage('building docker image')
                 {
                      steps {
-                        sh 'docker build -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG -f Dockerfile ./'
-                              }
+                                     sh 'docker build -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG -f Dockerfile ./'
+                                 }
                 }
     }
 
