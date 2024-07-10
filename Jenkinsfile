@@ -43,6 +43,25 @@ pipeline {
                 sh 'mvn test'
             }
         }
+
+        stage('SonarQube ') {
+                     steps {
+                            sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ahmed2000'
+                           }
+                     }
+
+         stage('Deploy') {
+                     steps {
+                            sh 'mvn deploy -DskipTests=true'
+                                 }
+                             }
+
+                stage('building docker image')
+                {
+                     steps {
+                        sh 'docker build -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG -f Dockerfile ./'
+                              }
+                }
     }
 
     post {
