@@ -70,10 +70,12 @@ pipeline {
                                                 if echo "$response" | grep -q "$ARTIFACT_ID"; then
                                                     echo "Artefact trouvé, exécution de nexus-staging:drop"
                                                     mvn nexus-staging:drop -DnexusUrl="$NEXUS_URL/repository/$REPOSITORY"
+                                                    mvn deploy -DskipTests=true
                                                 else
                                                     echo "Artefact non trouvé, pas besoin d'exécuter nexus-staging:drop"
+                                                    mvn deploy -DskipTests=true
                                                 fi
-                                                mvn deploy -DskipTests=true
+
                                                 '''
 
 
