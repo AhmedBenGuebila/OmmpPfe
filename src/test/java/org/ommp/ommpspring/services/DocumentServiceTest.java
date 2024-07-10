@@ -1,4 +1,5 @@
 package org.ommp.ommpspring.services;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,9 +11,9 @@ import org.ommp.ommpspring.entities.Document;
 import org.ommp.ommpspring.entities.User;
 import org.ommp.ommpspring.repositories.DocumentRepository;
 import org.ommp.ommpspring.repositories.UserRepository;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -81,4 +82,3 @@ public class DocumentServiceTest {
 
     // Ajoutez d'autres tests comme précédemment
 }
-
