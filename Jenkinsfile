@@ -34,7 +34,7 @@ pipeline {
 
         stage('Build with Maven') {
             steps {
-                sh 'mvn clean compile'
+                sh 'mvn clean package -DskipTests'
             }
         }
 
@@ -47,7 +47,12 @@ pipeline {
         stage('SonarQube ') {
 
                      steps {
-                            sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ahmed2000'
+                     script{
+                                   withSonarQubeEnv(credentialsId: 'sonar-api') {
+                                                   sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ahmed2000'
+                                             }
+                                 }
+
                            }
                      }
         stage('Quality Gate Status'){
