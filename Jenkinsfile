@@ -51,7 +51,13 @@ pipeline {
                 sh "docker push ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}"
             }
         }
-
+stage('Prepare Docker Compose') {
+            steps {
+                script {
+                    writeFile file: '.env', text: "BUILD_NUMBER=${env.BUILD_NUMBER}\n"
+                }
+            }
+        }
         stage('Run Docker Compose and OMMP Project') {
             steps {
                 sh 'docker compose up -d'
