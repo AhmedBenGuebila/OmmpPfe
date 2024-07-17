@@ -42,12 +42,33 @@ pipeline {
                         }
                              }
 
-                stage('building docker image')
+         stage('building docker image')
                 {
                      steps {
                                      sh 'docker build -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG -f Dockerfile ./'
                                  }
                 }
+
+
+          stage('push to dockerhub') {
+                                                      steps {
+
+                                                 sh "docker login -u ahmed1990909 -p ahmed2000"
+                                                 sh "docker tag ommpimage:v${BUILD_NUMBER} ahmed1990909/ommppfe:ommpimage"
+                                                 sh "docker push  ahmed1990909/ommppfe:ommpimage"
+                                                      }
+                                }
+
+          stage('run docker compose and ommp project') {
+                                                    steps {
+
+                                                      sh 'docker compose up -d'
+                                                           }
+                                                       }
+
+
+
+
     }
 
     post {
