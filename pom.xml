@@ -176,11 +176,14 @@
                         <goals>
                             <goal>deploy</goal>
                         </goals>
+                        <phase>deploy</phase>
+                        <configuration>
+                            <serverId>deploymentRepo</serverId>
+                            <nexusUrl>http://192.168.56.10:8081/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <serverId>deploymentRepo</serverId>
-                </configuration>
             </plugin>
         </plugins>
     </build>
