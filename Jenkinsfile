@@ -3,17 +3,16 @@ pipeline {
 
     environment {
         DOCKER_IMAGE_NAME = 'ommp'
-        DOCKER_IMAGE_TAG = "v100"
+        DOCKER_IMAGE_TAG = "v${BUILD_NUMBER}"
+        DOCKERHUB_REPO = 'ahmed1990909/ommppfe'
     }
 
-     stages {
-            stage('Checkout') {
-                steps {
-                    checkout scm
-                }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
             }
-
-
+        }
 
         stage('Build with Maven') {
             steps {
@@ -27,48 +26,37 @@ pipeline {
             }
         }
 
-        stage('SonarQube ') {
+        stage('SonarQube') {
+            steps {
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ahmed2000'
+            }
+        }
 
-                     steps {
+        stage('Deploy') {
+            steps {
+                sh 'mvn deploy -DskipTests=true'
+            }
+        }
 
-                            sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=ahmed2000'
-                           }
-                     }
+        stage('Build Docker Image') {
+            steps {
+                sh "docker build -t ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} -f Dockerfile ./"
+            }
+        }
 
-         stage('Deploy') {
-                     steps {
-                     sh 'mvn deploy -DskipTests=true'
+        stage('Push to DockerHub') {
+            steps {
+                sh "docker login -u ahmed1990909 -p ahmed2000"
+                sh "docker tag ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}"
+                sh "docker push ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}"
+            }
+        }
 
-                        }
-                             }
-
-         stage('building docker image')
-                {
-                     steps {
-                                     sh 'docker build -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG -f Dockerfile ./'
-                                 }
-                }
-
-
-          stage('push to dockerhub') {
-                                                      steps {
-
-                                                 sh "docker login -u ahmed1990909 -p ahmed2000"
-                                                 sh "docker tag ommpimage:v${BUILD_NUMBER} ahmed1990909/ommppfe:ommpimage"
-                                                 sh "docker push  ahmed1990909/ommppfe:ommpimage"
-                                                      }
-                                }
-
-          stage('run docker compose and ommp project') {
-                                                    steps {
-
-                                                      sh 'docker compose up -d'
-                                                           }
-                                                       }
-
-
-
-
+        stage('Run Docker Compose and OMMP Project') {
+            steps {
+                sh 'docker compose up -d'
+            }
+        }
     }
 
     post {
