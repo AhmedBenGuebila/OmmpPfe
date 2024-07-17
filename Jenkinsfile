@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE_NAME = 'ommp'
-        DOCKER_IMAGE_TAG = "v${BUILD_NUMBER}" // Utilisation du BUILD_NUMBER de Jenkins comme tag
+        DOCKER_IMAGE_TAG = "v100"
     }
 
      stages {
