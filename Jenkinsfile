@@ -65,12 +65,16 @@ stage('Prepare Docker Compose') {
         }
     }
 
-    post {
-        success {
-            echo 'Build successfully'
+     post {
+            success {
+                mail to: "ahmed.benguebila@esprit.tn",
+                subject: "Pipeline Backend Success",
+                body: " project ommppfe  Backend : Success on job ${env.JOB_NAME}, Build Num: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL}"
+            }
+            failure {
+                mail to: "ahmed.benguebila@esprit.tn",
+                subject: "Pipeline backend Failure",
+                body: "project ommppfe  Backend : Failure on job ${env.JOB_NAME}, Build Num: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL} "
+            }
         }
-        failure {
-            echo 'Build failed'
-        }
-    }
 }
