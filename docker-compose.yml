@@ -2,20 +2,20 @@ version: "3.7"
 
 services:
   spring:
-    image: ahmed1990909/ommppfe
+    image: ahmed1990909/ommppfe:v${BUILD_NUMBER}
     restart: always
     depends_on:
       - mysql
     ports:
       - 8089:8089
     environment:
-      - spring.datasource.url=jdbc:mysql://localhost:3306/ommp\db?&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+      - spring.datasource.url=jdbc:mysql://mysql:3306/ommpdb?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
 
   mysql:
     container_name: mysql
-    image: mysql
+    image: mysql:latest
     restart: always
     volumes:
       - db:/var/lib/mysql
