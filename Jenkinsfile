@@ -56,30 +56,6 @@ pipeline {
                      steps {
                      sh 'mvn deploy -DskipTests=true'
 
-                                                 sh '''
-                                                #!/bin/bash
-                                                NEXUS_URL="http://localhost:8081"
-                                                REPOSITORY="maven-releases"
-                                                GROUP_ID="org.ommp"
-                                                ARTIFACT_ID="ommpSpring"
-                                                VERSION="0.0.1"
-                                                USERNAME="admin"
-                                                PASSWORD="ahmed2000"
-
-                                                response=$(curl -u "$USERNAME:$PASSWORD" -s "$NEXUS_URL/service/rest/v1/search?repository=$REPOSITORY&group=$GROUP_ID&name=$ARTIFACT_ID&version=$VERSION")
-
-                                                if echo "$response" | grep -q "$ARTIFACT_ID"; then
-                                                    echo "Artefact trouvé, exécution de nexus-staging:drop"
-                                                    mvn nexus-staging:drop -DnexusUrl="$NEXUS_URL/repository/$REPOSITORY"
-                                                    mvn deploy -DskipTests=true
-                                                else
-                                                    echo "Artefact non trouvé, pas besoin d'exécuter nexus-staging:drop"
-                                                    mvn deploy -DskipTests=true
-                                                fi
-
-                                                '''
-
-
                         }
                              }
 
