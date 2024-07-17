@@ -1,7 +1,7 @@
 version: "3.7"
 
 services:
-  Equipeservice:
+  spring:
     image: ahmed1990909/ommppfe
     restart: always
     depends_on:
